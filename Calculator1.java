@@ -29,6 +29,7 @@ public class Calculator extends JFrame {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 0;
+        c.gridwidth = 3;
         add(num1, c);
         
         enter2 = new JLabel("2nd: ");
@@ -38,7 +39,7 @@ public class Calculator extends JFrame {
         c.gridwidth = 1;
         add(enter2, c);
         
-        num2 = new JTextField(10);
+        num2 = new JTextField(1);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 1;
         c.gridy = 1;
@@ -69,7 +70,7 @@ public class Calculator extends JFrame {
         c.gridx = 3;
         c.gridy = 2;
         add(divide, c);
-        
+              
         result = new JLabel("");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -77,12 +78,12 @@ public class Calculator extends JFrame {
         c.gridwidth = 4;
         add(result, c);
         
-        Event a = new Even();
+        Event a = new Event();
         add.addActionListener(a);
         subtract.addActionListener(a);
         multiply.addActionListener(a);
         divide.addActionListener(a);
-        
+    }
         public class Event implements ActionListener {
             public void actionPerformed (ActionEvent a) {
                 double number1;
@@ -103,7 +104,40 @@ public class Calculator extends JFrame {
                     result.setForeground(Color.RED);
                     return;
                 }
-            }
+                
+                String op = a.getActionCommand();
+                
+                if(op.equals("+")) {
+                    double sum = number1 + number2;
+                    result.setText(number1 + "+" + number2 + "=" + sum);
+                    result.setForeground(Color.RED);
+                } else if(op.equals("-")) {
+                    double diff = number1 - number2;
+                    result.setText(number1 + "-" + number2 + "=" + diff);
+                    result.setForeground(Color.RED);
+                    
+                } else if(op.equals("*")) {
+                    double factor = number1 * number2;
+                    result.setText(number1 + "*" + number2 + "=" + factor);
+                    result.setForeground(Color.RED);
+                } else if (op.equals("/")) {
+                    if (number2 == 0) {
+                        result.setText("Cannot divide by zero");
+                        result.setForeground(Color.RED);
+                    } else {
+                        double quotient = number1 / number2;
+                        result.setText(number1 + "/" + number2 + "=" + quotient);
+                        result.setForeground(Color.RED);
+                    }
+                } 
+                 
+                }
         }
-        
-    }
+        public static void main(String [] args) {
+            Calculator gui = new Calculator();
+            gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            gui.setVisible(true);
+            gui.setSize(250, 175);
+            gui.setTitle("Calculator");
+   }
+}
